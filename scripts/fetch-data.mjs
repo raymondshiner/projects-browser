@@ -10,7 +10,7 @@ const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2dXNoeW15cnl1bHpnaWZ3cWhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxNzM3NDUsImV4cCI6MjEwNDc0OTc0NX0.LH2-nQvnxQk63bIA7HiqSkIqG2opW8ReMK1l2ok6fBA'
 
 const res = await fetch(
-  `${SUPABASE_URL}/rest/v1/projects?select=*&order=sort.asc,created_at.asc`,
+  `${SUPABASE_URL}/rest/v1/projects?select=*&status=in.(shipped,archived)&order=sort.asc,created_at.asc`,
   { headers: { apikey: SUPABASE_ANON_KEY, authorization: `Bearer ${SUPABASE_ANON_KEY}` } },
 )
 if (!res.ok) {

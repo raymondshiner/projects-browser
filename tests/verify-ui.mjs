@@ -56,17 +56,41 @@ async function verify(label, browser, options) {
   const count = await cards.count()
   record(`${label}/all ${registry.projects.length} cards render`, count === registry.projects.length, `got ${count}`)
 
-  for (const p of registry.projects.filter((p) => p.live_url).slice(0, 3)) {
-    const link = page.getByRole('main').getByRole('link', { name: p.title, exact: true })
-    const href = await link.getAttribute('href')
-    record(`${label}/live link ${p.slug}`, href === p.live_url, href ?? 'missing')
+  for (const p of registry.projects.filter((p) => p.live_url).slice(0, 2)) {
+    const card = page.getByRole('article').filter({ has: page.getByRole('heading', { name: p.title, exact: true }) })
+    record(`${label}/card ${p.slug} title→detail`,
+      (await card.getByRole('link', { name: p.title, exact: true }).getAttribute('href')) === `/p/${p.slug}/`)
+    record(`${label}/card ${p.slug} live link`,
+      (await card.getByRole('link', { name: 'live' }).getAttribute('href')) === p.live_url)
+    record(`${label}/card ${p.slug} source link`,
+      (await card.getByRole('link', { name: 'source' }).getAttribute('href')) === p.repo_url)
   }
+
+  // tabs filter
+  const tools = registry.projects.filter((p) => p.kind === 'tool').length
+  await page.getByRole('tab', { name: 'Tools' }).click()
+  const visibleAfter = await page.getByRole('article').locator('visible=true').count()
+  record(`${label}/Tools tab shows ${tools}`, visibleAfter === tools, `got ${visibleAfter}`)
+  await page.getByRole('tab', { name: 'All' }).click()
 
   const contentInfo = await page.getByRole('contentinfo').textContent()
   record(`${label}/last-built timestamp`, /last built \d{4}-\d{2}-\d{2}/.test(contentInfo ?? ''), contentInfo?.trim().slice(0, 60))
 
   record(`${label}/no console errors`, errors.length === 0, errors[0] ?? '')
   await page.screenshot({ path: `${SHOTS}/${label}.png`, fullPage: true })
+
+  // detail page
+  const detail = registry.projects.find((p) => p.slug === 'montressor')
+  if (detail) {
+    await page.goto(`${BASE}p/${detail.slug}/`, { waitUntil: 'networkidle' })
+    const h1 = await page.getByRole('heading', { level: 1 }).textContent()
+    record(`${label}/detail h1`, h1 === detail.title, h1 ?? '')
+    record(`${label}/detail markdown renders`,
+      (await page.getByRole('heading', { level: 2 }).count()) >= 3)
+    record(`${label}/detail back link`,
+      (await page.getByRole('link', { name: /all projects/ }).getAttribute('href')) === '/')
+    await page.screenshot({ path: `${SHOTS}/${label}-detail.png`, fullPage: true })
+  }
   await ctx.close()
 }
 
@@ -74,6 +98,10 @@ async function verify(label, browser, options) {
 const noJs = await (await fetch(BASE)).text()
 record('static/prerendered content', noJs.includes('Momir Card Printer') && noJs.includes('<article'))
 record('static/og tags', noJs.includes('og:title') && noJs.includes('og:description'))
+const detailHtml = await (await fetch(`${BASE}p/al-bhed-translator/`)).text()
+record('static/detail prerendered', detailHtml.includes('The brief') && detailHtml.includes('primer mechanic'))
+record('static/detail og:image', detailHtml.includes('og:image') && detailHtml.includes('summary_large_image'))
+record('static/detail per-page title', detailHtml.includes('<title>Al Bhed Translator — Raymond Shiner</title>'))
 
 // WCAG AA contrast on the Andromeda tokens actually used for text
 record('a11y/muted-foreground contrast ≥4.5', contrast('#8a95ab', '#1c1e26') >= 4.5, contrast('#8a95ab', '#1c1e26').toFixed(2))

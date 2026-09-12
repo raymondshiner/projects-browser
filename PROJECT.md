@@ -28,7 +28,10 @@ becomes the directory that launches them. The umbrella is already real — **`mo
   that already lives in `~/jarvis/claude/project-logs/`.
 - **No client-confidential content.** Client work appears only at the level a public case study
   would — name, scope, link. Nothing under NDA.
-- **Not blog/long-form.** Entries are cards, not essays. Deep narrative links out to a case study.
+- ~~**Not blog/long-form.** Entries are cards, not essays. Deep narrative links out to a case study.~~
+  **Reversed 2026-09-11:** case studies moved INTO this site — each project has a `/p/<slug>/` detail
+  page (case study + how-it-was-built, `details_md` markdown column). This site is now the narrative
+  home; v3's case-study pages become redirect candidates (Cycle 3 work).
 - **No auth for visitors.** Fully public read; the only gated surface is the admin write path.
 
 ## Stack
@@ -112,7 +115,7 @@ Hand-written copy wins; the API only decorates.
 
 - Live-status pings per app; launch cards for `<name>.shiner.app`
 - Migrate deployed apps from current hosts onto `shiner.app` subdomains
-- GitHub live signals; per-project detail pages
+- GitHub live signals ~~; per-project detail pages~~ (detail pages shipped early, 2026-09-11)
 
 ## Open questions
 

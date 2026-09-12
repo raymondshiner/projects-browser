@@ -11,6 +11,8 @@ export type Project = {
   screenshot_url: string | null
   category: 'personal' | 'professional'
   status: 'shipped' | 'in-progress' | 'planned' | 'archived'
+  kind: 'site' | 'tool'
+  details_md: string | null
   sort: number
   created_at: string
   updated_at: string
