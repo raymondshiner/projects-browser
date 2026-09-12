@@ -86,6 +86,8 @@ async function verify(label, browser, options) {
     record(`${label}/detail h1`, h1 === detail.title, h1 ?? '')
     record(`${label}/detail markdown renders`,
       (await page.getByRole('heading', { level: 2 }).count()) >= 3)
+    const feats = await page.locator('[aria-labelledby="features-heading"] li').count()
+    record(`${label}/detail features list`, feats === detail.features.length, `got ${feats}`)
     record(`${label}/detail back link`,
       (await page.getByRole('link', { name: /all projects/ }).getAttribute('href')) === '/')
     await page.screenshot({ path: `${SHOTS}/${label}-detail.png`, fullPage: true })

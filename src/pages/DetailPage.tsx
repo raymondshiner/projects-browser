@@ -57,6 +57,24 @@ export function DetailPage({ project, built_at }: { project: Project; built_at: 
         </ul>
       </header>
 
+      {project.features.length > 0 && (
+        <section className="mb-8" aria-labelledby="features-heading">
+          <h2 id="features-heading" className="mb-3 font-mono text-xl font-bold text-primary">
+            Features
+          </h2>
+          <ul className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
+            {project.features.map((feature) => (
+              <li key={feature} className="flex gap-2.5 text-sm leading-relaxed text-foreground">
+                <span aria-hidden="true" className="mt-0.5 select-none font-mono text-primary">
+                  ▪
+                </span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {project.screenshot_url && (
         <img
           src={project.screenshot_url}

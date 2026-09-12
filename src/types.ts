@@ -12,6 +12,7 @@ export type Project = {
   category: 'personal' | 'professional'
   status: 'shipped' | 'in-progress' | 'planned' | 'archived'
   kind: 'site' | 'tool'
+  features: string[]
   details_md: string | null
   sort: number
   created_at: string
