@@ -45,9 +45,13 @@ export function IndexPage({ projects, built_at }: { projects: Project[]; built_a
         ))}
       </div>
 
-      <main className="grid flex-1 auto-rows-min grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <main className="grid flex-1 content-start grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
-          <div key={project.id} hidden={tab !== 'all' && project.kind !== tab}>
+          <div
+            key={project.id}
+            className="grid"
+            hidden={tab !== 'all' && project.kind !== tab}
+          >
             <ProjectCard project={project} />
           </div>
         ))}

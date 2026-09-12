@@ -23,18 +23,11 @@ export function ProjectCard({ project }: { project: Project }) {
       )}
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <h2 className="font-mono text-base font-semibold text-foreground">
-            <a href={detailHref} className="hover:text-primary focus-visible:text-primary">
-              {project.title}
-            </a>
-          </h2>
-          {project.status === 'archived' && (
-            <span className="shrink-0 rounded-full border border-border bg-muted px-2 py-0.5 font-mono text-[11px] leading-4 text-muted-foreground">
-              retired
-            </span>
-          )}
-        </div>
+        <h2 className="font-mono text-base font-semibold text-foreground">
+          <a href={detailHref} className="hover:text-primary focus-visible:text-primary">
+            {project.title}
+          </a>
+        </h2>
 
         <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{project.blurb}</p>
 

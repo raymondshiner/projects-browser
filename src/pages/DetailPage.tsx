@@ -43,11 +43,6 @@ export function DetailPage({ project, built_at }: { project: Project; built_at: 
               source
             </a>
           )}
-          {project.status === 'archived' && (
-            <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[11px] leading-4 text-muted-foreground">
-              retired
-            </span>
-          )}
         </div>
 
         <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
