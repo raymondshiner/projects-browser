@@ -52,9 +52,9 @@ async function verify(label, browser, options) {
   const heading = await page.getByRole('heading', { level: 1 }).textContent()
   record(`${label}/h1`, /Things I.?ve built/i.test(heading ?? ''), heading?.trim())
 
-  const cards = page.getByRole('article')
-  const count = await cards.count()
-  record(`${label}/all ${registry.projects.length} cards render`, count === registry.projects.length, `got ${count}`)
+  const sites = registry.projects.filter((p) => p.kind === 'site').length
+  const visibleSites = await page.getByRole('article').locator('visible=true').count()
+  record(`${label}/Sites default shows ${sites}`, visibleSites === sites, `got ${visibleSites}`)
 
   for (const p of registry.projects.filter((p) => p.live_url).slice(0, 2)) {
     const card = page.getByRole('article').filter({ has: page.getByRole('heading', { name: p.title, exact: true }) })
@@ -71,7 +71,6 @@ async function verify(label, browser, options) {
   await page.getByRole('tab', { name: 'Tools' }).click()
   const visibleAfter = await page.getByRole('article').locator('visible=true').count()
   record(`${label}/Tools tab shows ${tools}`, visibleAfter === tools, `got ${visibleAfter}`)
-  await page.getByRole('tab', { name: 'All' }).click()
 
   const contentInfo = await page.getByRole('contentinfo').textContent()
   record(`${label}/last-built timestamp`, /last built \d{4}-\d{2}-\d{2}/.test(contentInfo ?? ''), contentInfo?.trim().slice(0, 60))

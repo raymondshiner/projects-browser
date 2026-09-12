@@ -4,7 +4,6 @@ import { ProjectCard } from '@/components/ProjectCard'
 import { Footer } from '@/components/Footer'
 
 const TABS = [
-  { id: 'all', label: 'All' },
   { id: 'site', label: 'Sites' },
   { id: 'tool', label: 'Tools' },
 ] as const
@@ -12,7 +11,7 @@ const TABS = [
 type Tab = (typeof TABS)[number]['id']
 
 export function IndexPage({ projects, built_at }: { projects: Project[]; built_at: string }) {
-  const [tab, setTab] = useState<Tab>('all')
+  const [tab, setTab] = useState<Tab>('site')
 
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-5 py-10 sm:px-8">
@@ -50,7 +49,7 @@ export function IndexPage({ projects, built_at }: { projects: Project[]; built_a
           <div
             key={project.id}
             className="grid"
-            hidden={tab !== 'all' && project.kind !== tab}
+            hidden={project.kind !== tab}
           >
             <ProjectCard project={project} />
           </div>
