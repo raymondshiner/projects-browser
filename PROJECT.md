@@ -70,8 +70,9 @@ Hand-written copy wins; the API only decorates.
 - [ ] Registry seeded with every shipped project from `~/src` plus client work
 - [ ] `browse.shiner.app` renders the full index as **static HTML** (crawler- and social-card-safe),
       built from Supabase at build time
-- [ ] Supabase webhook → Cloudflare deploy hook wired: adding a row republishes the site with **no
-      human action**, verified end to end
+- [x] ~~Supabase webhook → Cloudflare deploy hook~~ — **dropped 2026-09-11: manual updates.**
+      Jarvis updates the registry + rebuilds + pushes on each new public deploy (standing rule in
+      jarvis memory); push to `main` auto-deploys via GitHub Actions + wrangler (momir pattern)
 - [ ] Each card shows title, blurb, stack chips, screenshot, and working links (live / repo / case study)
 - [ ] Deployed to Cloudflare Pages on `browse.shiner.app` with HTTPS (`.app` is HSTS-preloaded)
 - [ ] `verify-ui.mjs` passes — desktop + iPhone 13, `getByRole`, WCAG AA contrast
