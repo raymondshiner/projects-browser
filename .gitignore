@@ -6,3 +6,5 @@ dist/
 
 # local launch config (basePort + account profile) — machine-specific
 .project.json
+src/data/projects.json
+supabase/.temp/
