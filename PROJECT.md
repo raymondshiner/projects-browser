@@ -120,9 +120,12 @@ Decide before Cycle 1 starts:
 - [x] ~~**Account profile**~~ — **resolved 2026-09-11: `personal`.** `momir.shiner.app` is already
       deployed on Cloudflare Pages under the personal profile, so `shiner.app` lives in the personal
       Cloudflare account. `project-init` takes the default profile; no business token needed.
-- [ ] **Repo visibility** — public (portfolio credibility, and the code is itself a work sample) or private?
-- [ ] **Client-work consent** — which clients agree to be named publicly? Gate `professional` seeding on it.
-- [ ] **Screenshot pipeline** — hand-captured, or Playwright-automated against each live URL?
+- [x] ~~**Repo visibility**~~ — **resolved 2026-09-11: public** (`github.com/raymondshiner/projects-browser`).
+- [x] ~~**Client-work consent**~~ — **resolved 2026-09-11: moot — no actual client work exists yet.**
+      All currently built projects seed in. **Standing rule:** every new build gets added by default;
+      builds under the `business` profile → ask Raymond per-project (some will go in, some won't).
+- [x] ~~**Screenshot pipeline**~~ — **resolved 2026-09-11: Playwright-automated**
+      (`scripts/capture-screenshots.mjs` → Supabase Storage `screenshots` bucket).
 - [ ] **Does `rshiner-website-v3` eventually consume this**, or keep its own hand-written case studies
       as the narrative layer? (Leaning: keep both — index here, story there.)
 
